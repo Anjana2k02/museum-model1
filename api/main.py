@@ -17,12 +17,50 @@ WINDOW_SIZE = int(os.getenv("HAR_WINDOW_SIZE", "128"))
 STEP_SIZE = int(os.getenv("HAR_STEP_SIZE", "10"))
 MODEL_PATH = os.getenv("HAR_MODEL_PATH", str(Path(__file__).resolve().parents[1] / "har_position_model.joblib"))
 
+_HOST = os.getenv("HOST", "127.0.0.1")
+_PORT = os.getenv("PORT", "8000")
+_BASE_URL = f"http://{_HOST}:{_PORT}"
+
+_tags_metadata = [
+    {
+        "name": "Info",
+        "description": "Health check and server information.",
+    },
+    {
+        "name": "Inference",
+        "description": (
+            "Activity prediction endpoints. "
+            "Submit a **128-sample sensor window** via REST (`POST /predict-window`), "
+            "or stream samples continuously over **WebSocket** (`/stream`)."
+        ),
+    },
+]
+
 app = FastAPI(
     title="HAR Realtime API",
     version="1.0.0",
-    description="Real-time Human Activity Recognition API using accelerometer and gyroscope data.",
+    description=(
+        "## Human Activity Recognition — Real-time Inference API\n\n"
+        "Predicts physical activity (**WALKING**, **SITTING**, **STANDING**) "
+        "from raw IMU sensor data (accelerometer + gyroscope).\n\n"
+        "### Two prediction modes\n"
+        "| Mode | Endpoint | When to use |\n"
+        "|------|----------|-------------|\n"
+        "| Batch | `POST /predict-window` | You already have a 128-sample buffer |\n"
+        "| Stream | `WS /stream` | Continuous real-time sensor stream |\n\n"
+        "### Sensor input format\n"
+        "Each sample provides **6 axes** at one point in time:\n"
+        "- `ax, ay, az` — accelerometer (m/s²)\n"
+        "- `gx, gy, gz` — gyroscope (deg/s)\n"
+        "- `timestamp` — Unix time (seconds)\n\n"
+        "### Quick test via Swagger\n"
+        "1. **`GET /health`** → Try it out → Execute — confirms the model is loaded.\n"
+        "2. **`POST /predict-window`** → Try it out → Execute — "
+        "128 sitting-posture samples are pre-filled in the example body."
+    ),
     docs_url="/docs",
     redoc_url="/redoc",
+    openapi_tags=_tags_metadata,
 )
 predictor: HarPredictor | None = None
 
@@ -37,8 +75,8 @@ def startup_event() -> None:
 def root() -> dict[str, str]:
     return {
         "message": "HAR Realtime API",
-        "docs": "http://127.0.0.1:8000/docs",
-        "redoc": "http://127.0.0.1:8000/redoc",
+        "docs": f"{_BASE_URL}/docs",
+        "redoc": f"{_BASE_URL}/redoc",
     }
 
 
