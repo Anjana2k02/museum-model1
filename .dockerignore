@@ -1,0 +1,50 @@
+# Python cache — regenerated at runtime, not needed at build time
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.py[cod]
+
+# Virtual environment — image installs its own deps via pip
+.venv/
+venv/
+env/
+
+# Environment files — NEVER bake secrets into a Docker image
+.env
+.env.local
+.env.example
+.env.*.local
+
+# Git metadata — irrelevant inside the container
+.git/
+.gitignore
+
+# Editor / OS artefacts
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+Thumbs.db
+
+# Test files — not needed in production image
+test_client.py
+test_websocket.py
+
+# Training script — not needed in production image
+colab_har_training.py
+
+# Documentation
+README.txt
+README_API.md
+
+# Docker files (excluded for clarity; Docker ignores them automatically)
+Dockerfile
+.dockerignore
+docker-compose.yml
+
+# Data / feature files not used at runtime
+features.txt
+features_info.txt
+activity_labels.txt

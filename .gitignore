@@ -1,0 +1,43 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# Environment files — NEVER commit real env files
+.env
+.env.local
+.env.*.local
+# NOTE: .env.example is intentionally NOT ignored (it is the safe template)
+
+# IDE and OS artefacts
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
+Thumbs.db
+
+# Model files — *.joblib is NOT ignored so the model is available for Docker build
+# If the repo grows too large, migrate to Git LFS instead of ignoring here
+# *.joblib
+
+# Test artefacts
+.pytest_cache/
+htmlcov/
+.coverage
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Logs
+*.log
