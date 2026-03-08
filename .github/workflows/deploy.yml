@@ -78,7 +78,7 @@ jobs:
             IMAGE="${{ env.IMAGE_NAME }}:latest"
             CONTAINER="har-api"
             ENV_FILE="/opt/har-api/.env"
-            PORT="8000"
+            PORT="8888"
 
             echo "=== Pulling latest image ==="
             docker pull "${IMAGE}"
@@ -92,6 +92,7 @@ jobs:
               --name "${CONTAINER}" \
               --restart unless-stopped \
               --env-file "${ENV_FILE}" \
+              -e PUBLIC_BASE_URL=https://museum-model1-production.up.railway.app \
               -e HOST=0.0.0.0 \
               -e ENV=live \
               -p "${PORT}:${PORT}" \

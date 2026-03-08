@@ -43,7 +43,7 @@ ENV HAR_STEP_SIZE=10
 # They are injected at `docker run` time via --env-file /opt/har-api/.env
 # and the explicit -e HOST=0.0.0.0 -e ENV=live flags in the deploy script.
 
-EXPOSE 8000
+EXPOSE 8888
 
 # Exec form (JSON array) — signals (SIGTERM) go directly to Python, not a shell.
 # This enables graceful shutdown when `docker stop` is called.
