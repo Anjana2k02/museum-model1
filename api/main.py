@@ -17,7 +17,7 @@ WINDOW_SIZE = int(os.getenv("HAR_WINDOW_SIZE", "128"))
 STEP_SIZE = int(os.getenv("HAR_STEP_SIZE", "10"))
 MODEL_PATH = os.getenv("HAR_MODEL_PATH", str(Path(__file__).resolve().parents[1] / "har_position_model.joblib"))
 
-_HOST = os.getenv("HOST", "127.0.0.1")
+_HOST = os.getenv("HOST", "0.0.0.0")
 _PORT = os.getenv("PORT", "8888")
 _PUBLIC_BASE_URL = os.getenv("PUBLIC_BASE_URL", "").strip()
 _BASE_URL = _PUBLIC_BASE_URL or f"http://{_HOST}:{_PORT}"
